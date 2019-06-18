@@ -1,0 +1,48 @@
+@import '_default'
+
+#title
+	text-align: center
+	margin: 40px 0 20px
+	font-family: 'Playfair Display', serif
+
+	.main-title
+		font-size: 40px
+		margin-bottom: 10px
+
+	.sub-title
+		color: #aaa
+		font-size: 14px
+		font-style: italic
+
+#chart
+	position: relative
+	text-align: center
+
+svg
+	margin: auto 30px 60px
+	position: relative
+
+	#y-axis, #x-axis
+		text 
+			fill: #999
+		line, path
+			stroke: #999
+
+	text 
+		font-size: 12px
+
+	.bar
+		fill: #77c182
+		&:hover
+			opacity: 0.9
+			fill: #63e069
+
+#tooltip
+	position: absolute
+	display: block
+	width: 140px
+	height: 40px
+	padding: 5px
+	text-align: center
+	font-size: 14px
+	background-color: #eee
