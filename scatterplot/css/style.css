@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url(../node_modules/normalize.css/normalize.css);
+@import url(/../node_modules/normalize.css/normalize.css);
 body {
   font-family: 'Open Sans', 'sans-serif', '微軟正黑體', 'Ping-Fang', 'Gudea Display', 'Playfair Display';
   height: 100%; }
@@ -39,6 +39,7 @@ ul, li {
 
 svg {
   margin: auto 30px 60px;
+  border: 1px solid #aaa;
   position: relative; }
   svg #y-axis text, svg #x-axis text {
     fill: #999; }
@@ -46,18 +47,21 @@ svg {
     stroke: #999; }
   svg text {
     font-size: 12px; }
-  svg .bar {
-    fill: #77c182; }
-    svg .bar:hover {
-      opacity: 0.9;
-      fill: #63e069; }
+  svg .dot {
+    stroke: transparent; }
+    svg .dot:hover {
+      stroke: #868686;
+      opacity: 0.75; }
 
 #tooltip {
   position: absolute;
   display: block;
-  width: 140px;
-  height: 40px;
-  padding: 5px;
-  text-align: center;
+  width: 230px;
+  padding: 10px;
+  text-align: left;
   font-size: 14px;
+  font-family: 'Gudea Display';
   background-color: #eee; }
+
+#legend text {
+  text-anchor: end; }

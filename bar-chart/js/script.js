@@ -21,10 +21,6 @@ $(function(){
 						   .attr("id", "tooltip")
 						   .style("opacity", 0);
 
-		// let test = d3.select("#chart")
-		// 			 .append("div")
-		// 			 .attr("class", "test");
-
 		let xScale = d3.scaleTime()
 					   .domain([d3.min(dataset, (d) => new Date(d[0])), d3.max(dataset, (d) => new Date(d[0]))])
 					   .range([0, w]);

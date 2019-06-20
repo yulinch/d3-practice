@@ -13,12 +13,16 @@ $(function(){
 					  })
 
 	var parsedTime;
-	var color = d3.scaleOrdinal(d3.schemeCategory20);
+	var color = d3.schemeCategory10;
 
 	var tooltip = d3.select("#chart")
 					.append("div")
 					.attr("id", "tooltip")
 					.style("opacity", 0);
+
+	var legend = d3.select("#chart")
+				   .append("div")
+				   .attr("id", "legend");
 
 	d3.json(dataurl, function(data){
 		var chart = container.append("g");
@@ -72,9 +76,7 @@ $(function(){
 			 	"cx": (d) => xScale(d.Year),
 			 	"cy": (d) => yScale(d.Time),
 			 	"r": 5,
-			 	// "fill": (d) => (d.Doping != '' ? "#ffbc40" : "#47bac1"),
-			 	// "fill": (d) => (d.Doping != '' ? d3.rgb(125,30,88) : d3.rgb(20,166, 190)),
-			 	"fill": (d) => (d.Doping != '' ? color(0) : color(1)),
+			 	"fill": (d) => (d.Doping != '' ? "#ffbc40" : "#47bac1"),
 			 	"data-xvalue" : (d) => d.Year,
 			 	"data-yvalue" : (d) => timeFormat(d.Time),
 			 	"transform": "translate(" + margin + ",0)"
@@ -97,31 +99,10 @@ $(function(){
 			 		   .style("opacity", 0)
 			 })
 
-		var legend = container.selectAll(".legend")
-						  .data(color.domain())
-						  .enter()
-						  .append("g")
-						  .attrs({
-						  	"id": "legend",
-						  	"class": "legend",
-						  	"transform": (d, i) => "translate(0, " + (h - i * 20) + ")"
-						  })
-
-		legend.append("rect")
-			  .attrs({
-			  	"x": w + margin - 10,
-			  	"width": 12,
-			  	"height": 12
-			  })
-			  .style("fill", (d,i) => color(i));
-
-		legend.append("text")
-			  .attrs({
-			  	"x": w + margin - 15,
-			  	"y": 9,
-			  })
-			  .text((d) => d ? "Riders with doping allegations" : "No doping allegations")
-
+		legend.selectAll(".legend")
+			  .append("g")
+			  .append("text")
+			  .text("No Doping allegations")
 
 		chart.styles({
 			"transform": "translate(0, " + margin + "px)"
