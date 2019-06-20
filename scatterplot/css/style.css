@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url(/../node_modules/normalize.css/normalize.css);
+@import url(/../../node_modules/normalize.css/normalize.css);
 body {
   font-family: 'Open Sans', 'sans-serif', '微軟正黑體', 'Ping-Fang', 'Gudea Display', 'Playfair Display';
   height: 100%; }
@@ -39,7 +39,6 @@ ul, li {
 
 svg {
   margin: auto 30px 60px;
-  border: 1px solid #aaa;
   position: relative; }
   svg #y-axis text, svg #x-axis text {
     fill: #999; }

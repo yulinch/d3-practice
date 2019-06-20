@@ -23,10 +23,19 @@ $(function(){
 	d3.json(dataurl, function(data){
 		var chart = container.append("g");
 
-		data.forEach(function(d) {
-		    var parsedTime = d.Time.split(':');
-		    d.Time = new Date(1970, 0, 1, 0, parsedTime[0], parsedTime[1]);
-		});
+		// data.forEach(function(d) {
+		//     var parsedTime = d.Time.split(':');
+		//     d.Time = new Date(1970, 0, 1, 0, parsedTime[0], parsedTime[1]);
+		// });
+
+		var time = [];
+		for(var i = 0; i < data.length; i++){
+			time.push(data[i].Time);
+		}
+
+		// var parsedTime = time.map(function(d){
+		// 	return d3.timeParse("%M:%S")(d)
+		// })
 
 		var timeFormat = d3.timeFormat("%M:%S");
 
@@ -34,8 +43,12 @@ $(function(){
 					   .domain([d3.min(data, (d) => d.Year - 1), d3.max(data, (d) => d.Year + 1)])
 					   .range([0, w]);
 
+		// var yScale = d3.scaleTime()
+		// 			   .domain(d3.extent(data, function(d) {return d.Time}))
+		// 			   .range([h, 0]);
+
 		var yScale = d3.scaleTime()
-					   .domain(d3.extent(data, function(d) {return d.Time}))
+					   .domain(d3.extent(data, (d) => d.Seconds))
 					   .range([h, 0]);
 
 		var xAxis = d3.axisBottom()
@@ -43,8 +56,15 @@ $(function(){
 					  .scale(xScale);
 
 		var yAxis = d3.axisLeft()
-					  .tickFormat(d3.timeFormat("%M:%S"))
-					  .scale(yScale);
+					  .scale(yScale)
+					  // .tickFormat(d3.timeFormat("%M:%S"))
+					  .tickFormat(function(d, i) {
+					  	return time[i]
+					  })
+
+		// var yAxis = d3.axisLeft()
+		// 			  .tickFormat(d3.timeFormat("%M:%S"))
+		// 			  .scale(yScale);
 
 		chart.append("g")
 			 .attrs({
@@ -55,12 +75,33 @@ $(function(){
 			 .call(xAxis);
 
 		chart.append("g")
+			 .append("text")
+			 .text("(year)")
+			 .attrs({
+			 	"class": "x-text",
+			 	"x": w + 60,
+			 	"y": h + 40,
+			 	"fill": "#999"
+			 })
+
+		chart.append("g")
 			 .attrs({
 			 	"id": "y-axis",
 			 	"class": "y axis",
 			 	"transform": "translate(" + margin + ",0)"
 			 })
 			 .call(yAxis);
+
+		chart.append("g")
+			 .append("text")
+			 .text("(minutes)")
+			 .attrs({
+			 	"class": "y-text",
+			 	"x": -50,
+			 	"y": 10,
+			 	"transform": "rotate(-90)",
+			 	"fill": "#999"
+			 })
 
 		chart.append("g")
 			 .selectAll("circle")
@@ -70,22 +111,29 @@ $(function(){
 			 .attrs({
 			 	"class": "dot",
 			 	"cx": (d) => xScale(d.Year),
-			 	"cy": (d) => yScale(d.Time),
-			 	"r": 5,
-			 	// "fill": (d) => (d.Doping != '' ? "#ffbc40" : "#47bac1"),
-			 	// "fill": (d) => (d.Doping != '' ? d3.rgb(125,30,88) : d3.rgb(20,166, 190)),
+			 	// "cy": (d) => yScale(d.Time),
+			 	"cy": (d, i) => yScale(parseInt(d.Seconds)),
+			 	"r": 0,
 			 	"fill": (d) => (d.Doping != '' ? color(0) : color(1)),
 			 	"data-xvalue" : (d) => d.Year,
-			 	"data-yvalue" : (d) => timeFormat(d.Time),
+			 	// "data-yvalue" : (d) => timeFormat(d.Time),
+			 	"data-yvalue" : (d, i) => time[i].slice(0,2),
 			 	"transform": "translate(" + margin + ",0)"
 			 })
-			 .on("mouseover", function(d){
+			 .transition()
+			 .duration(300)
+			 .delay(600)
+			 .attr("r", 5)
+
+		chart.selectAll("circle")
+			 .on("mouseover", function(d, i){
 			 	tooltip.transition()
 			 		   .duration(300)
 			 		   .ease(d3.easeQuad)
 			 		   .style("opacity", 0.9)
 			 	tooltip.attr("data-year", d.Year)
-			 		   .html( "Name: " + d.Name + "<br>Year: " + d.Year + ",   Time: " + timeFormat(d.Time) + (d.Doping ? "<br>-<br>" + d.Doping : ""))
+			 		   // .html( "Name: " + d.Name + "<br>Year: " + d.Year + ",   Time: " + timeFormat(d.Time) + (d.Doping ? "<br>-<br>" + d.Doping : ""))
+			 		   .html( "Name: " + d.Name + "<br>Year: " + d.Year + ",   Time: " + time[i] + (d.Doping ? "<br>-<br>" + d.Doping : ""))
 			 		   .styles({
 			 		   	"left": (d3.event.pageX + 10) + "px",
 			 		   	"top": (d3.event.pageY - 150) + "px",
@@ -121,7 +169,6 @@ $(function(){
 			  	"y": 9,
 			  })
 			  .text((d) => d ? "Riders with doping allegations" : "No doping allegations")
-
 
 		chart.styles({
 			"transform": "translate(0, " + margin + "px)"
