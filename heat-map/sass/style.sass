@@ -13,7 +13,6 @@
 		color: #aaa
 		font-size: 14px
 		font-style: italic
-		font-weight: bold
 
 #chart
 	position: relative
@@ -21,6 +20,7 @@
 
 svg
 	margin: auto 30px 60px
+	border: 1px solid #ddd
 	position: relative
 
 	#y-axis, #x-axis
@@ -32,18 +32,31 @@ svg
 	text 
 		font-size: 12px
 
-	.bar
-		fill: #77c182
+	.cell
+		// fill: #ffbc40
+		stroke: transparent
 		&:hover
-			opacity: 0.9
-			fill: #63e069
+			// stroke: #868686
+			opacity: 0.75
+			// fill: #ff3030
 
 #tooltip
 	position: absolute
 	display: block
-	width: 140px
-	height: 50px
-	padding: 5px
-	text-align: center
+	width: 230px
+	// height: 120px
+	padding: 10px
+	text-align: left
 	font-size: 14px
+	font-family: 'Gudea Display'
 	background-color: #eee
+
+#legend
+	text 
+		text-anchor: end
+// 	position: absolute
+// 	display: block
+// 	right: 220px
+// 	bottom: 300px
+// 	font-size: 12px
+// 	font-family: 'Gudea Display'

@@ -64,7 +64,8 @@ $(function(){
 			 	"height": 0,
 			 	"class": "bar",
 			 	"transform": "translate(" + margin + ", 0)",
-			 	"data-date": (d) => formatTime(new Date(d[0])),
+			 	// "data-date": (d) => formatTime(new Date(d[0])),
+			 	"data-date": (d) => d[0],
 			 	"data-gdp": (d) => d[1]
 			 })
 			 .transition()
@@ -90,7 +91,8 @@ $(function(){
 			 		   		"opacity": 1
 			 		   })
 			 		   .attrs({
-			 		   		"data-date": formatTime(new Date(d[0])),
+			 		   		// "data-date": formatTime(new Date(d[0])),
+			 		   		"data-date": d[0],
 			 		   		"data-gdp": d[1]
 			 		   })
 			 })

@@ -117,7 +117,7 @@ $(function(){
 			 	"fill": (d) => (d.Doping != '' ? color(0) : color(1)),
 			 	"data-xvalue" : (d) => d.Year,
 			 	// "data-yvalue" : (d) => timeFormat(d.Time),
-			 	"data-yvalue" : (d, i) => time[i].slice(0,2),
+			 	"data-yvalue" : (d, i) => time[i],
 			 	"transform": "translate(" + margin + ",0)"
 			 })
 			 .transition()
