@@ -47,7 +47,6 @@ $(function(){
 	for(var i = 0; i<data.length; i++){
 		total.push(data[i].Total);
 	}
-	console.log(total)
 
 	var w = 800,
 		h = 600,
@@ -60,7 +59,7 @@ $(function(){
 					  .attr("height", h + margin*2);
 
 	var chart = container.append("g");
-	var color = d3.schemeCategory20b;
+	var color = d3.scaleOrdinal(d3.schemeCategory20c)
 
 	var problems = [];
 	for(var i = 0; i< data.length; i++){
@@ -76,13 +75,18 @@ $(function(){
 		}
 	}
 
+	// 外層的群組
 	var x0 = d3.scaleBand()
 			   .domain(years)
+			   .paddingInner(0.1)
 			   .rangeRound([0, w]);
+			   // .range([0, w]);
 			   // .round(0.1);
 
+	// 群組裡的每個bar
 	var xScale = d3.scaleBand()
 				   .domain(problems)
+				   .padding(0.05)
 				   .rangeRound([0, x0.bandwidth()]);
 				   // .range([0,w])
 				   // .round(0.1)
@@ -92,10 +96,11 @@ $(function(){
 				  .scale(x0);
 
 	var yScale = d3.scaleLinear()
-				   // .domain([d3.min(data, (d) => d["Total"]), d3.max(data, (d) => d["Total"])])
-				   // .domain([0, d3.max(data, (total) => {return d3.max(total, (d) => d)})])
-				   .domain([d3.min(total), d3.max(total)])
-				   .range([h, 0]);
+				   .domain([0, d3.max(data, (d) => d.Total)])
+				   // .domain([0, d3.max(data, (d) => d3.max(total, (item) => item))])
+				   // .domain([0], d3.max(total, (d) => d))
+				   // .domain([d3.min(data, (d)=> d.Total), d3.max(data, (d) => d.Total)])
+				   .rangeRound([h, 0]);
 
 	var yAxis = d3.axisLeft()
 				  .scale(yScale);
@@ -120,33 +125,22 @@ $(function(){
 					 .append("g")
 					 .attrs({
 					 	"class": "group",
+					 	"transform": function(d) {
+					 		return "translate(" + x0(d) + ",0)"
+					 	}
 					 })
 
-	group.selectAll("rect")
-		 .data(total)
-		 .enter()
-		 .append("rect")
-		 .attrs({
-		 	"class": "bar",
-		 	"x": (d) => xScale(d.Year),
-		 	"y": (d, i) => yScale(2),
-		 	"width": xScale.bandwidth(),
-		 	"height": (d, i) => h - yScale(2),
-		 	"fill": "#ddd"
-		 })
-
-	// chart.append("g")
-	// 	 .selectAll("rect")
+	// group.selectAll("rect")
 	// 	 .data(data)
 	// 	 .enter()
 	// 	 .append("rect")
 	// 	 .attrs({
 	// 	 	"class": "bar",
-	// 	 	"x": (d,i) => xScale(d.TheNameOfTheProblem),
-	// 	 	"y": (d) => yScale(d.Total),
-	// 	 	"width": xScale.bandwidth,
-	// 	 	"height": (d) => h - yScale(d.Total),
-	// 	 	"fill": "#ddd",
+	// 	 	"x": (d) => xScale(d.TheNameOfTheProblem),
+	// 	 	"y": (d, i) => yScale(d.Total),
+	// 	 	"width": xScale.bandwidth(),
+	// 	 	"height": (d, i) => h - yScale(d.Total),
+	// 	 	"fill": (d) => color(d.TheNameOfTheProblem)
 	// 	 })
 
 })

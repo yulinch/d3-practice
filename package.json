@@ -2,16 +2,15 @@
   "name": "youbike",
   "version": "1.0.0",
   "main": "gulpfile.js",
-  "dependencies": {
-    "gulp-autoprefixer": "^6.1.0",
-    "gulp-sass": "^4.0.2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "del": "^4.1.1",
     "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
     "gulp-filter": "^6.0.0",
     "gulp-notify": "^3.2.0",
     "gulp-plumber": "^1.2.1",
+    "gulp-sass": "^4.0.2",
     "normalize.css": "^8.0.1"
   },
   "postcss": {
@@ -26,5 +25,13 @@
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "## bar chart",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yulinch/d3-practice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yulinch/d3-practice/issues"
+  },
+  "homepage": "https://github.com/yulinch/d3-practice#readme"
 }

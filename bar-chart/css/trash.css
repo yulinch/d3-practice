@@ -47,8 +47,12 @@ svg {
     stroke: #999; }
   svg text {
     font-size: 12px; }
-  svg .bar {
-    fill: #77c182; }
-    svg .bar:hover {
-      opacity: 0.9;
-      fill: #63e069; }
+  svg .bar:hover {
+    opacity: 0.9; }
+
+#tooltip {
+  position: absolute;
+  width: 140px;
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #eee; }

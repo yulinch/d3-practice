@@ -21,6 +21,7 @@
 
 svg
 	margin: auto 30px 60px
+	// border: 1px solid #aaa
 	position: relative
 
 	#y-axis, #x-axis
@@ -29,17 +30,18 @@ svg
 		line, path
 			stroke: #999
 
-	#x-axis
-		text 
-			// transform: rotate(-45deg) translate(-10px, 0px)
-			// text-anchor: end
-
 	text 
 		font-size: 12px
 
 	.bar
-		fill: #77c182
 		&:hover
 			opacity: 0.9
-			fill: #63e069
+
+#tooltip
+	position: absolute
+	width: 140px
+	// height: 40px
+	padding: 5px 10px
+	font-size: 12px
+	background-color: #eee
 
