@@ -166,7 +166,6 @@ $(function(){
 	for(var i = 0; i < data.length; i++){
 		values.push(data[i].values);
 	}
-	console.log(values)
 
 	var w = 800,
 		h = 600,
